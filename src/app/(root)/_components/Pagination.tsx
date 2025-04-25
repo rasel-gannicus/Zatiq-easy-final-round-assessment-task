@@ -8,7 +8,7 @@ interface PaginationProps {
 const Pagination = ({ currentPage, lastPage, onPageChange }: PaginationProps) => {
     const renderPageNumbers = () => {
         const pages = [];
-        const totalPages = Math.min(5, lastPage); // Only show maximum 5 pages
+        const totalPages = Math.min(5, lastPage); 
 
         for (let i = 1; i <= totalPages; i++) {
             pages.push(
