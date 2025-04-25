@@ -1,4 +1,7 @@
-import { SearchBarProps } from "@/types/types";
+interface SearchBarProps {
+    searchTerm: string;
+    onSearch: (value: string) => void;
+}
 
 const SearchBar = ({ searchTerm, onSearch }: SearchBarProps) => {
     return (

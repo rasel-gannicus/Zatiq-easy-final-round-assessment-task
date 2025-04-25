@@ -1,18 +1,38 @@
 "use client";
-import { useEffect, useState } from "react";
+
+import { useState, useEffect } from "react";
+import { Product, ApiResponse } from "@/types/types";
+
+import Pagination from "./Pagination";
 import SearchBar from "./SearchBar";
-import { ApiResponse, Product } from "@/types/types";
+import ProductTable from "./ProductTable";
 
 const ProductsContainer = () => {
     const [products, setProducts] = useState<Product[]>([]);
-    const [searchTerm, setSearchTerm] = useState("");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
+    const [lastPage, setLastPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState("");
     const [sortBy, setSortBy] = useState("id");
     const [sortOrder, setSortOrder] = useState("desc");
-    const [lastPage, setLastPage] = useState(1);
 
+    const handleSort = (column: string) => {
+        if (sortBy === column) {
+            setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+        } else {
+            setSortBy(column);
+            setSortOrder("asc");
+        }
+    };
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            fetchProducts();
+        }, 300);
+
+        return () => clearTimeout(timeoutId);
+    }, [currentPage, searchTerm, sortBy, sortOrder]);
 
     const fetchProducts = async () => {
         try {
@@ -44,13 +64,31 @@ const ProductsContainer = () => {
         }
     };
 
-    useEffect(()=>{
-        console.log(fetchProducts());
-    },[products])
-
     return (
         <div className="container mx-auto px-4 py-8">
             <SearchBar searchTerm={searchTerm} onSearch={setSearchTerm} />
+
+            {error && <div className="text-red-500 text-center mb-4">{error}</div>}
+
+            {loading ? (
+                <div className="flex justify-center items-center h-64">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+                </div>
+            ) : (
+                <>
+                    <ProductTable
+                        products={products}
+                        sortBy={sortBy}
+                        sortOrder={sortOrder}
+                        onSort={handleSort}
+                    />
+                    <Pagination
+                        currentPage={currentPage}
+                        lastPage={lastPage}
+                        onPageChange={setCurrentPage}
+                    />
+                </>
+            )}
         </div>
     );
 };
