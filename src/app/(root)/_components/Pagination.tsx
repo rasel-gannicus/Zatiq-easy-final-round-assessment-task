@@ -8,17 +8,34 @@ interface PaginationProps {
 const Pagination = ({ currentPage, lastPage, onPageChange }: PaginationProps) => {
     const renderPageNumbers = () => {
         const pages = [];
-        const totalPages = Math.min(5, lastPage); 
+        const maxVisiblePages = 5;
+        
+        let startPage = 1;
+        let endPage = lastPage;
 
-        for (let i = 1; i <= totalPages; i++) {
+        if (lastPage > maxVisiblePages) {
+            if (currentPage <= 3) {
+                startPage = 1;
+                endPage = 5;
+            } else if (currentPage + 2 >= lastPage) {
+                startPage = lastPage - 4;
+                endPage = lastPage;
+            } else {
+                startPage = currentPage - 2;
+                endPage = currentPage + 2;
+            }
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
             pages.push(
                 <button
                     key={i}
                     onClick={() => onPageChange(i)}
-                    className={`px-3 cursor-pointer py-1 mx-1 rounded ${currentPage === i
-                        ? "bg-blue-500 text-white"
-                        : "bg-gray-200 hover:bg-gray-300"
-                        }`}
+                    className={`px-3 cursor-pointer py-1 mx-1 rounded ${
+                        currentPage === i
+                            ? "bg-blue-500 text-white"
+                            : "bg-gray-200 hover:bg-gray-300"
+                    }`}
                 >
                     {i}
                 </button>
