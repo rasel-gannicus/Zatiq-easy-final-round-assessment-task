@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 interface PaginationProps {
     currentPage: number;
     lastPage: number;
@@ -7,21 +8,14 @@ interface PaginationProps {
 const Pagination = ({ currentPage, lastPage, onPageChange }: PaginationProps) => {
     const renderPageNumbers = () => {
         const pages = [];
-        const maxVisiblePages = 5;
-        let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
-        // eslint-disable-next-line prefer-const
-        let endPage = Math.min(lastPage, startPage + maxVisiblePages - 1);
+        const totalPages = Math.min(5, lastPage); // Only show maximum 5 pages
 
-        if (endPage - startPage + 1 < maxVisiblePages) {
-            startPage = Math.max(1, endPage - maxVisiblePages + 1);
-        }
-
-        for (let i = startPage; i <= endPage; i++) {
+        for (let i = 1; i <= totalPages; i++) {
             pages.push(
                 <button
                     key={i}
                     onClick={() => onPageChange(i)}
-                    className={`px-3 py-1 mx-1 rounded ${currentPage === i
+                    className={`px-3 cursor-pointer py-1 mx-1 rounded ${currentPage === i
                         ? "bg-blue-500 text-white"
                         : "bg-gray-200 hover:bg-gray-300"
                         }`}
@@ -38,7 +32,7 @@ const Pagination = ({ currentPage, lastPage, onPageChange }: PaginationProps) =>
             <button
                 onClick={() => onPageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
+                className="px-3 py-1 cursor-pointer rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
             >
                 Previous
             </button>
