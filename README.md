@@ -27,11 +27,13 @@ Before running this project, make sure you have:
 
 1. Clone the repository:
 ```bash
-git clone [your-repository-url]
+git clone [https://github.com/rasel-gannicus/Zatiq-easy-final-round-assessment-task.git]
+```
 
 2. Install dependencies:
+
 ```bash
-yarn install
+npm install
  ```
 
 3. Create a .env file in the root directory and add necessary environment variables:
