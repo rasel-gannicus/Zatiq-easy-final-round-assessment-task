@@ -30,7 +30,7 @@ const ProductTable = ({ products, sortBy, sortOrder, onSort }: ProductTableProps
         <div className="overflow-x-auto">
             <table className="min-w-full bg-white border border-gray-300">
                 <thead>
-                    <tr className="bg-gray-100">
+                    <tr className="bg-gray-100  text-sm">
                         <th className="px-6 py-3 border-b">Image</th>
                         {renderTableHeader("Name", "name")}
                         {renderTableHeader("Brand", "brand_name")}

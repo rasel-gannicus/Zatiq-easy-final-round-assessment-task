@@ -76,12 +76,14 @@ const ProductsContainer = () => {
                 </div>
             ) : (
                 <>
-                    <ProductTable
-                        products={products}
-                        sortBy={sortBy}
-                        sortOrder={sortOrder}
-                        onSort={handleSort}
-                    />
+                    <div className="min-h-[50vh]">
+                        <ProductTable
+                            products={products}
+                            sortBy={sortBy}
+                            sortOrder={sortOrder}
+                            onSort={handleSort}
+                        />
+                    </div>
                     <Pagination
                         currentPage={currentPage}
                         lastPage={lastPage}
